@@ -1,13 +1,13 @@
 <?php
 namespace Controllers;
 
-use Model\Something;
+use Model\Profile;
 
-class Something
+class Profile
 {
     public function save()
     {
-        $something = new Something();
+        $something = new Profile();
         $something->something = "Scooby Doo";
         $something->save();
     }
