@@ -2,6 +2,8 @@
 
 use Phalcon\Mvc\Micro;
 use Phalcon\Loader;
+use Phalcon\Di\FactoryDefault;
+use Phalcon\Db\Adapter\Pdo\Mysql as PdoMysql;
 
 // Creates the autoloader
 $loader = new Loader();
@@ -9,8 +11,8 @@ $loader = new Loader();
 // Register some namespaces
 $loader->registerNamespaces(
     [
-       'Model' => __DIR__ . 'models/',
-       'Controller' => __DIR__ . 'controllers/'
+       'Model' => __DIR__ . '/models/',
+       'Controller' => __DIR__ . '/controllers/'
     ]
 );
 
@@ -26,9 +28,9 @@ $di->set(
         return new PdoMysql(
             [
                 'host'     => 'localhost',
-                'username' => '',
+                'username' => 'root',
                 'password' => '',
-                'dbname'   => '',
+                'dbname'   => 'umaportodas',
             ]
         );
     }
@@ -36,46 +38,53 @@ $di->set(
 
 $app = new Micro($di);
 
-// Retrieve all something
+// Retrieve all routes
 $app->get(
-    '/api/something',
+    '/api/routes',
     function () {
-        echo 'oi';
-        // Operation to fetch all the broadbands
-        // $objSomething = new Controller\Something();
-        // echo json_encode($objSomething->getAll());
+        // Operation to fetch all the routes
+        $objRoute = new Controller\Ways();
+        echo json_encode($objRoute->getAll());
     }
 );
 
-// Retrieves something based on primary key
+// Retrieves routes based on primary key
 $app->get(
-    '/api/something/{id:[0-9]+}',
+    '/api/routes/{id:[0-9]+}',
     function ($id) {
-        // Operation to fetch something with id $id
+        // Operation to fetch routes with id $id
+        $objRoute = new Controller\Ways();
+        echo json_encode($objRoute->getRoute($id));
     }
 );
 
-// Adds a new something
+// Adds a new routes
 $app->post(
-    '/api/something',
+    '/api/routes',
     function () {
-        // Operation to create a fresh something
+        // Operation to create a fresh routes
+        $objRoute = new Controller\Ways();
+        echo json_encode($objRoute->create($this->request->getPost()));
     }
 );
 
-// Updates something based on primary key
+// Updates routes based on primary key
 $app->put(
-    '/api/something/{id:[0-9]+}',
+    '/api/routes/{id:[0-9]+}',
     function ($id) {
-        // Operation to update a something with id $id
+        // Operation to update a routes with id $id
+        $objRoute = new Controller\Ways();
+        echo json_encode($objRoute->update($id, $this->request->getPut()));
     }
 );
 
-// Deletes something based on primary key
+// Deletes routes based on primary key
 $app->delete(
-    '/api/something/{id:[0-9]+}',
+    '/api/routes/{id:[0-9]+}',
     function ($id) {
-        // Operation to delete the something with id $id
+        // Operation to delete the routes with id $id
+        $objRoute = new Controller\Ways();
+        echo json_encode($objRoute->delete($id));
     }
 );
 

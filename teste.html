@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UmaPorTodas | Teste</title>
+</head>
+<body>
+    <div id="buscarRotas"></div>
+    <div id="buscarRotaEspecifica"></div>
+    <div id="salvarRota"></div>
+    <div id="atualizarRota"></div>
+    <div id="removerRota"></div>
+
+    <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // salvarRota({lat_from: '1', lgt_from: '2', lat_to: '3', lgt_to: '4', vehicle: 'onibus', date_time: '2018-04-22 04:35:00', favorite: 0, id_profile: 1});
+            buscarRotas();
+            buscarRotaEspecifica(2);
+            atualizarRota(2, {lat_to: '5', date_time: '2018-04-23 00:00:00'});
+            // removerRota(2);
+            // buscarRotas();
+        });
+
+        function salvarRota(json) {
+            $.ajax({
+                url: '/umaportodas/api/routes',
+                method: 'post',
+                dataType: 'json',
+                data: json,
+                async: false
+            })
+            .done(function(result) {
+                console.log(result);
+                $('#salvarRota').html("save success");
+            })
+            .fail(function() {
+                $('#salvarRota').html("save error");
+            })
+            .always(function() {
+                $('#salvarRota').html("save complete");
+            });
+        }
+
+        function atualizarRota(idRota, json) {
+            $.ajax({
+                url: '/umaportodas/api/routes/' + idRota,
+                method: 'put',
+                dataType: 'json',
+                data: json,
+                async: false
+            })
+            .done(function(result) {
+                console.log(result);
+                $('#atualizarRota').html("update success");
+            })
+            .fail(function() {
+                $('#atualizarRota').html("update error");
+            })
+            .always(function() {
+                $('#atualizarRota').html("update complete");
+            });
+        }
+
+        function buscarRotas() {
+            $.ajax({
+                url: '/umaportodas/api/routes',
+                dataType: 'json',
+                async: false
+            })
+            .done(function(result) {
+                console.log(result);
+                $('#buscarRotas').html("getall success");
+            })
+            .fail(function() {
+                $('#buscarRotas').html("getall error");
+            })
+            .always(function() {
+                $('#buscarRotas').html("getall complete");
+            });
+        }
+
+        function buscarRotaEspecifica(idRota) {
+            $.ajax({
+                url: '/umaportodas/api/routes/' + idRota,
+                dataType: 'json',
+                async: false
+            })
+            .done(function(result) {
+                console.log(result);
+                $('#buscarRotaEspecifica').html("get specific success");
+            })
+            .fail(function() {
+                $('#buscarRotaEspecifica').html("get specific error");
+            })
+            .always(function() {
+                $('#buscarRotaEspecifica').html("get specific complete");
+            });
+        }
+
+        function removerRota(idRota) {
+            $.ajax({
+                url: '/umaportodas/api/routes/' + idRota,
+                method: 'delete',
+                dataType: 'json',
+                async: false
+            })
+            .done(function() {
+                $('#removerEspecifica').html("remove success");
+            })
+            .fail(function() {
+                $('#removerEspecifica').html("remove error");
+            })
+            .always(function() {
+                $('#removerEspecifica').html("remove complete");
+            });
+        }
+    </script>
+</body>
+</html>

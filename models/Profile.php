@@ -1,5 +1,5 @@
 <?php
-namespace Models;
+namespace Model;
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Behavior\Timestampable;

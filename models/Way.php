@@ -1,10 +1,10 @@
 <?php
-namespace Models;
+namespace Model;
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 
-class Routes extends Model
+class Way extends Model
 {
     protected $id_route;
     protected $lat_from;
@@ -12,12 +12,15 @@ class Routes extends Model
     protected $lat_to;
     protected $lgt_to;
     protected $vehicle;
+    protected $date_time;
     protected $favorite;
     protected $id_profile;
     protected $created_at;
 
     public function initialize()
     {
+        $this->setSource("routes");
+
         $this->addBehavior(
             new Timestampable(
                 [
@@ -105,13 +108,33 @@ class Routes extends Model
         return $this->vehicle;
     }
 
+    public function setDateTime($date_time)
+    {
+        $this->date_time = $date_time;
+    }
+
+    public function getDateTime()
+    {
+        return $this->date_time;
+    }
+
     public function setFavorite($favorite)
     {
-        $this->favorite = (int) $favorite;
+        $this->favorite = (bool) $favorite;
     }
 
     public function getFavorite()
     {
         return (bool) $this->favorite;
+    }
+
+    public function setIdProfile($id_profile)
+    {
+        $this->id_profile = $id_profile;
+    }
+
+    public function getIdProfile()
+    {
+        return $this->id_profile;
     }
 }
